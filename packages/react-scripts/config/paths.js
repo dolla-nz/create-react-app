@@ -14,8 +14,9 @@ const getPublicUrlOrPath = require('react-dev-utils/getPublicUrlOrPath');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
-const appDirectory = fs.realpathSync(process.cwd());
-console.log('APP DIR', appDirectory);
+const appName = process.argv[2];
+const pathToApp = appName ? `frontends/${appName}/` : '';
+const appDirectory = fs.realpathSync(`${process.cwd()}/${pathToApp}`);
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
@@ -30,7 +31,7 @@ const publicUrlOrPath = getPublicUrlOrPath(
   process.env.PUBLIC_URL
 );
 
-const buildPath = process.env.BUILD_PATH || 'build';
+const buildPath = `${pathToApp}${process.env.BUILD_PATH || 'build'}`;
 
 const moduleFileExtensions = [
   'web.mjs',
